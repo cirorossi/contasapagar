@@ -9,7 +9,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Optional;
 import java.time.LocalDate;
 import org.springframework.http.HttpStatus;
@@ -58,12 +57,15 @@ public class ContaController {
     }
 
     @GetMapping("/filter")
-    public List<Conta> getContasByFilter(@RequestParam(required = false) String startDate,
+    public Page<Conta> getContasByFilter(@RequestParam(required = false) String startDate,
                                          @RequestParam(required = false) String endDate,
-                                         @RequestParam(required = false) String descricao) {
+                                         @RequestParam(required = false) String descricao,
+                                         @RequestParam(defaultValue = "0") int page,
+                                         @RequestParam(defaultValue = "10") int size) {
         LocalDate start = startDate != null ? LocalDate.parse(startDate) : null;
         LocalDate end = endDate != null ? LocalDate.parse(endDate) : null;
-        return contaService.getContasByFilter(start, end, descricao);
+        Pageable pageable = PageRequest.of(page, size);
+        return contaService.getContasByFilter(start, end, descricao, pageable);
     }
 
     @PostMapping("/import")
@@ -73,7 +75,7 @@ public class ContaController {
         }
 
         try (BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
-            String line;
+            String line= br.readLine();
             while ((line = br.readLine()) != null) {
                 String[] data = line.split(",");
                 Conta conta = new Conta();
@@ -89,6 +91,13 @@ public class ContaController {
         }
 
         return ResponseEntity.ok("File processed successfully");
+    }
+
+    @GetMapping("/total-pago")
+    public BigDecimal getTotalPago(@RequestParam String startDate, @RequestParam String endDate) {
+        LocalDate start = LocalDate.parse(startDate);
+        LocalDate end = LocalDate.parse(endDate);
+        return contaService.getTotalPagoEntreDatas(start, end);
     }
 }
 

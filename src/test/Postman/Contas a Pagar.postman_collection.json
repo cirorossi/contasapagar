@@ -1,0 +1,338 @@
+{
+	"info": {
+		"_postman_id": "6bb1e6c8-8529-467e-8554-d0f0291cab95",
+		"name": "Contas a Pagar",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8869507"
+	},
+	"item": [
+		{
+			"name": "Cadastrar conta",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"dataVencimento\": \"2024-06-30\",\n  \"dataPagamento\": \"2024-06-15\",\n  \"valor\": 100.00,\n  \"descricao\": \"Conta de Luz\",\n  \"situacao\": \"PAGO\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/contas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"contas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Atualizar conta",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"dataVencimento\": \"2024-07-30\",\n  \"dataPagamento\": \"2024-07-15\",\n  \"valor\": 150.00,\n  \"descricao\": \"Conta de Água\",\n  \"situacao\": \"PENDENTE\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/contas/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"contas",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Alterar a situação da conta",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/contas/1/situacao?situacao=PAGO",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"contas",
+						"1",
+						"situacao"
+					],
+					"query": [
+						{
+							"key": "situacao",
+							"value": "PAGO"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obter a lista de contas a pagar, com filtro de data de vencimento e descrição",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/contas/filter?startDate=2024-01-01&endDate=2024-12-31&descricao=Conta&page=0&size=20",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"contas",
+						"filter"
+					],
+					"query": [
+						{
+							"key": "startDate",
+							"value": "2024-01-01"
+						},
+						{
+							"key": "endDate",
+							"value": "2024-12-31"
+						},
+						{
+							"key": "descricao",
+							"value": "Conta"
+						},
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "20"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obter conta filtrando o id",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/contas/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"contas",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Obter valor total pago por período",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/contas/total-pago?startDate=2024-06-01&endDate=2024-06-30",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"contas",
+						"total-pago"
+					],
+					"query": [
+						{
+							"key": "startDate",
+							"value": "2024-06-01"
+						},
+						{
+							"key": "endDate",
+							"value": "2024-06-30"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Importação de contas via arquivo csv",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "user",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/C:/Users/ciro.rossi/Downloads/contas.csv"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/contas/import",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"contas",
+						"import"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

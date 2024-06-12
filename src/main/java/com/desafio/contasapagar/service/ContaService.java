@@ -6,9 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import java.util.List;
+
 import java.util.Optional;
 import java.time.LocalDate;
+import java.math.BigDecimal;
 
 @Service
 public class ContaService {
@@ -57,16 +58,20 @@ public class ContaService {
         contaRepository.deleteById(id);
     }
 
-    public List<Conta> getContasByFilter(LocalDate startDate, LocalDate endDate, String descricao) {
+    public Page<Conta> getContasByFilter(LocalDate startDate, LocalDate endDate, String descricao, Pageable pageable) {
         if (startDate != null && endDate != null && descricao != null) {
-            return contaRepository.findByDataVencimentoBetweenAndDescricaoContaining(startDate, endDate, descricao);
+            return contaRepository.findByDataVencimentoBetweenAndDescricaoContaining(startDate, endDate, descricao, pageable);
         } else if (startDate != null && endDate != null) {
-            return contaRepository.findByDataVencimentoBetween(startDate, endDate);
+            return contaRepository.findByDataVencimentoBetween(startDate, endDate, pageable);
         } else if (descricao != null) {
-            return contaRepository.findByDescricaoContaining(descricao);
+            return contaRepository.findByDescricaoContaining(descricao, pageable);
         } else {
-            return contaRepository.findAll();
+            return contaRepository.findAll(pageable);
         }
+    }
+
+    public BigDecimal getTotalPagoEntreDatas(LocalDate startDate, LocalDate endDate) {
+        return contaRepository.findTotalPagoEntreDatas(startDate, endDate);
     }
 }
 

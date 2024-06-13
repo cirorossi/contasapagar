@@ -1,4 +1,4 @@
-package com.desafio.contasapagar.domain;
+package com.desafio.contasapagar.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

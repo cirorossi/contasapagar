@@ -1,4 +1,4 @@
-package com.desafio.contasapagar.config;
+package com.desafio.contasapagar.infrastructure.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

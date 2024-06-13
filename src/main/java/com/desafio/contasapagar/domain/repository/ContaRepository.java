@@ -1,6 +1,6 @@
-package com.desafio.contasapagar.repository;
+package com.desafio.contasapagar.domain.repository;
 
-import com.desafio.contasapagar.domain.Conta;
+import com.desafio.contasapagar.domain.model.Conta;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.domain.Page;
